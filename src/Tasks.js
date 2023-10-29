@@ -1,19 +1,42 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const Tasks = () => {
+  const [task, setTask] = useState("");
+  const [tasklist, setTasklist] = useState([]);
+
+  // handle input values
+  const handleInputValue = (inputTask) => {
+    setTask(inputTask);
+  };
+
+  //add task button
+  const handleAddTask = () => {
+    setTasklist((prevTask) => [...prevTask, task]);
+    alert("task added!");
+    setTask("");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
+          onChangeText={handleInputValue}
           style={styles.inputBox}
           placeholder="Add your task"
         ></TextInput>
-        <Button title="Add Task" />
+        <Button onPress={handleAddTask} title="Add Task" />
       </View>
       <View>
         <Text style={styles.border}></Text>
         <Text style={styles.textTitle}>Your Task:</Text>
+        <View>
+          {tasklist?.map((taskItem, index) => (
+            <Text style={styles.taskItem} key={index}>
+              {taskItem}
+            </Text>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -49,5 +72,12 @@ const styles = StyleSheet.create({
   border: {
     borderBottomWidth: 1,
     color: "#cccccc",
+  },
+  taskItem: {
+    margin: 10,
+    padding: 20,
+    borderRadius: 20,
+    backgroundColor: "green",
+    color: "white",
   },
 });
