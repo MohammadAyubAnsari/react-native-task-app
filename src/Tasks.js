@@ -5,6 +5,7 @@ import {
   Button,
   StyleSheet,
   ScrollView,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 
@@ -34,19 +35,22 @@ const Tasks = () => {
         ></TextInput>
         <Button onPress={handleAddTask} title="Add Task" />
       </View>
-      <View>
-        <Text style={styles.border}></Text>
-        <Text style={styles.textTitle}>Your Task:</Text>
-        <View>
-          <ScrollView>
-            {tasklist?.map((taskItem, index) => (
-              <Text style={styles.taskItem} key={index}>
-                {taskItem}
-              </Text>
-            ))}
-          </ScrollView>
-        </View>
-      </View>
+
+      <Text style={styles.border}></Text>
+      <Text style={styles.textTitle}>Your Task:</Text>
+      <FlatList
+        data={tasklist}
+        renderItem={({ item, index }) => {
+          return (
+            <Text style={styles.taskItem}>
+              {index + 1} : {item}
+            </Text>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return index;
+        }}
+      />
     </View>
   );
 };
