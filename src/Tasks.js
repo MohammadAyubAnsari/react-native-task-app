@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import React, { useState } from "react";
+import TaskItem from "./components/TaskItem";
 
 const Tasks = () => {
   const [task, setTask] = useState("");
@@ -41,11 +42,7 @@ const Tasks = () => {
       <FlatList
         data={tasklist}
         renderItem={({ item, index }) => {
-          return (
-            <Text style={styles.taskItem}>
-              {index + 1} : {item}
-            </Text>
-          );
+          return <TaskItem item={item} index={index} />;
         }}
         keyExtractor={(item, index) => {
           return index;
@@ -85,12 +82,5 @@ const styles = StyleSheet.create({
   border: {
     borderBottomWidth: 1,
     color: "#cccccc",
-  },
-  taskItem: {
-    margin: 10,
-    padding: 20,
-    borderRadius: 20,
-    backgroundColor: "green",
-    color: "white",
   },
 });
