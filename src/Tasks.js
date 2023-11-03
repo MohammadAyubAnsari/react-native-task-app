@@ -16,9 +16,15 @@ const Tasks = () => {
 
   //add task button
   const handleAddTask = (task) => {
-    setTasklist((prevTask) => [...prevTask, task]);
-    // alert("task added!");
-    // setTask("");
+    setTasklist((prevTask) => [
+      ...prevTask,
+      { task: task, id: Math.random().toString() },
+    ]);
+  };
+
+  const handleDelete = (id) => {
+    setTasklist((currentList) => currentList.filter((t) => t.id !== id));
+    console.log("Item Deleted");
   };
 
   return (
@@ -34,7 +40,9 @@ const Tasks = () => {
       <FlatList
         data={tasklist}
         renderItem={({ item, index }) => {
-          return <TaskItem item={item} index={index} />;
+          return (
+            <TaskItem handleDelete={handleDelete} item={item} index={index} />
+          );
         }}
         keyExtractor={(item, index) => {
           return index;

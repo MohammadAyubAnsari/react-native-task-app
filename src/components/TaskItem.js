@@ -1,13 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 
-const TaskItem = ({ index, item }) => {
+const TaskItem = ({ index, item, handleDelete }) => {
   return (
-    <View>
+    <Pressable
+      android_ripple={{ color: "red" }}
+      onPress={handleDelete.bind(this, item.id)}
+    >
       <Text style={styles.taskItem}>
-        {index + 1} : {item}
+        {index + 1} : {item.task}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
