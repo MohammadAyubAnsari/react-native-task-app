@@ -9,36 +9,28 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import TaskItem from "./components/TaskItem";
+import AddTask from "./components/AddTask";
 
 const Tasks = () => {
-  const [task, setTask] = useState("");
   const [tasklist, setTasklist] = useState([]);
 
-  // handle input values
-  const handleInputValue = (inputTask) => {
-    setTask(inputTask);
-  };
-
   //add task button
-  const handleAddTask = () => {
+  const handleAddTask = (task) => {
     setTasklist((prevTask) => [...prevTask, task]);
     // alert("task added!");
-    setTask("");
+    // setTask("");
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={handleInputValue}
-          style={styles.inputBox}
-          placeholder="Add your task"
-        ></TextInput>
-        <Button onPress={handleAddTask} title="Add Task" />
-      </View>
-
+      <AddTask handleAddTaskButton={handleAddTask} />
       <Text style={styles.border}></Text>
-      <Text style={styles.textTitle}>Your Task:</Text>
+      {tasklist.length > 0 ? (
+        <Text style={styles.textTitle}>Your Task:</Text>
+      ) : (
+        <Text style={styles.textTitle}>No Task:</Text>
+      )}
+      {/* <Text style={styles.textTitle}>Your Task:</Text> */}
       <FlatList
         data={tasklist}
         renderItem={({ item, index }) => {
@@ -59,20 +51,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 15,
   },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  inputBox: {
-    width: "75%",
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 10,
-    padding: 5,
-    paddingLeft: 15,
-  },
+
   textTitle: {
     marginTop: 10,
     fontSize: 26,
